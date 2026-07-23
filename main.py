@@ -35,14 +35,14 @@ def draw_board():
         for x in range(8):
 
             cell = document.createElement("div")
-            cell.className = "cell"
+            cell.setAttribute("class", "cell")
 
             value = board_data[y][x]
 
             if value != 0:
 
                 stone = document.createElement("div")
-                stone.className = "stone"
+                stone.setAttribute("class", "stone")
                 stone.style.background = colors[value]
 
                 cell.appendChild(stone)
