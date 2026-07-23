@@ -7,6 +7,13 @@ board = document.getElementById("board")
 # ----------------------------
 
 board_data = [[0 for _ in range(8)] for _ in range(8)]
+turn = 1
+
+colors = {
+    1: "red",
+    2: "blue",
+    3: "limegreen"
+}
 
 # 初期配置（3色）
 board_data[3][3] = 1
