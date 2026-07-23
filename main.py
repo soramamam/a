@@ -1,60 +1,114 @@
 from pyscript import document
 
-board = document.getElementById("board")
+# ==========================================
+# 定数
+# ==========================================
 
-# ----------------------------
-# 盤面データ
-# ----------------------------
+BOARD_SIZE = 8
 
-board_data = [[0 for _ in range(8)] for _ in range(8)]
-turn = 1
+EMPTY = 0
+RED = 1
+BLUE = 2
+GREEN = 3
 
-colors = {
-    1: "red",
-    2: "blue",
-    3: "limegreen"
+STONE_COLOR = {
+    RED: "red",
+    BLUE: "blue",
+    GREEN: "limegreen"
 }
 
-# 初期配置（3色）
-board_data[3][3] = 1
-board_data[3][4] = 2
-board_data[4][3] = 3
-board_data[4][4] = 1
-board_data[2][3] = 2
-board_data[5][4] = 3
+TURN_NAME = {
+    RED: "赤",
+    BLUE: "青",
+    GREEN: "緑"
+}
 
-# ----------------------------
+# ==========================================
+# ゲームデータ
+# ==========================================
+
+board = document.getElementById("board")
+turn_label = document.getElementById("turn")
+
+turn = RED
+
+board_data = [
+    [EMPTY for _ in range(BOARD_SIZE)]
+    for _ in range(BOARD_SIZE)
+]
+
+# 初期配置
+board_data[3][3] = RED
+board_data[3][4] = BLUE
+board_data[4][3] = GREEN
+board_data[4][4] = RED
+board_data[2][3] = BLUE
+board_data[5][4] = GREEN
+
+
+# ==========================================
+# 石を置く
+# ==========================================
+
+def place_stone(x, y):
+
+    global turn
+
+    if board_data[y][x] != EMPTY:
+        return
+
+    board_data[y][x] = turn
+
+    if turn == RED:
+        turn = BLUE
+
+    elif turn == BLUE:
+        turn = GREEN
+
+    else:
+        turn = RED
+
+    draw_board()
+
+
+# ==========================================
 # 描画
-# ----------------------------
+# ==========================================
 
 def draw_board():
 
-    board.innerHTML = ""
+    board.replaceChildren()
 
-    colors = {
-        1: "red",
-        2: "blue",
-        3: "limegreen"
-    }
+    for y in range(BOARD_SIZE):
 
-    for y in range(8):
-
-        for x in range(8):
+        for x in range(BOARD_SIZE):
 
             cell = document.createElement("div")
             cell.setAttribute("class", "cell")
 
             value = board_data[y][x]
 
-            if value != 0:
+            def click(event, x=x, y=y):
+                place_stone(x, y)
+
+            cell.addEventListener("click", click)
+
+            if value != EMPTY:
 
                 stone = document.createElement("div")
                 stone.setAttribute("class", "stone")
-                stone.style.background = colors[value]
+
+                stone.style.background = STONE_COLOR[value]
 
                 cell.appendChild(stone)
 
             board.appendChild(cell)
 
+    turn_label.innerText = f"現在の手番：{TURN_NAME[turn]}"
+
+
+# ==========================================
+# メイン
+# ==========================================
 
 draw_board()
