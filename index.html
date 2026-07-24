@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>3色オセロ</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- PyScript -->
     <link rel="stylesheet"
-          href="https://pyscript.net/releases/2025.5.1/core.css">
+        href="https://pyscript.net/releases/2025.3.1/core.css">
 
     <script type="module"
-            src="https://pyscript.net/releases/2025.5.1/core.js"></script>
+        src="https://pyscript.net/releases/2025.3.1/core.js"></script>
 </head>
+
 <body>
 
-<h1>3色オセロ</h1>
+    <h1>3色オセロ</h1>
 
-<h2 id="turn">現在の手番：赤</h2>
+    <div id="game-container">
 
-<div id="board"></div>
+        <div id="info">
+            読み込み中...
+        </div>
 
-<script type="py" src="main.py"></script>
+        <div id="board">
+
+        </div>
+
+    </div>
+
+    <script type="py" src="main.py"></script>
 
 </body>
+
 </html>
